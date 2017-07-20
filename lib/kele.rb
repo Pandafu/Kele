@@ -17,10 +17,14 @@ class Kele
 
     @auth = self.class.post("/sessions", options)
     #puts @auth
-    @auth_token = @auth["auth_token"] 
+    @auth_token = @auth["auth_token"]
   end
 
   def get_me
       response = JSON.parse(self.class.get("/users/me", headers: { "Authorization" => @auth_token }).body)
     end
+
+  def get_mentor_availability(mentor_id)#2364248
+      response = Array(self.class.get("/mentors/#{mentor_id}/student_availability", headers: {"Authorization" => @auth_token}))
+  end
 end
