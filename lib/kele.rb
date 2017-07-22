@@ -2,10 +2,14 @@
 require 'httparty'
 require 'json'
 require './lib/roadmap'
+require './lib/message'
+require './lib/mentor'
 
 class Kele
   include HTTParty
   include Roadmap
+  include Message
+  include Mentor 
   #attr_reader :auth_token
   base_uri 'https://www.bloc.io/api/v1'
 
@@ -25,8 +29,4 @@ class Kele
   def get_me
       response = JSON.parse(self.class.get("/users/me", headers: { "Authorization" => @auth_token }).body)
     end
-
-  def get_mentor_availability(mentor_id)
-      response = Array(self.class.get("/mentors/#{mentor_id}/student_availability", headers: {"Authorization" => @auth_token}))
-  end
 end
