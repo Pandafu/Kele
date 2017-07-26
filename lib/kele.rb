@@ -10,20 +10,18 @@ class Kele
   include Roadmap
   include Message
   include Mentor
-  #attr_reader :auth_token
-  base_uri 'https://www.bloc.io/api/v1'
+  #attr_accessor :auth_token
+
+
 
   def initialize(email, password)
+    self.class.base_uri 'https://www.bloc.io/api/v1'
     options = {
       body:{
         "email": email,
         "password": password
-      }
-    }
-
-    @auth = self.class.post("/sessions", options)
-    #puts @auth
-    @auth_token = @auth["auth_token"]
+      }    }
+    @auth_token = self.class.post("/sessions", options)["auth_token"]
   end
 
   def get_me
